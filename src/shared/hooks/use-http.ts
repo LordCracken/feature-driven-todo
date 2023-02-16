@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 interface IReqConf {
   url: string;
-  method?: 'POST' | 'GET';
+  method?: 'POST' | 'GET' | 'DELETE' | 'PATCH';
   headers?: HeadersInit;
   body?: unknown;
 }
