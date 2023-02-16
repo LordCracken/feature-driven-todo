@@ -5,7 +5,7 @@ import { ArrowForward } from '@mui/icons-material';
 import { useAppDispatch } from '../../../app/store';
 import { sendNewTodo } from '../store';
 import useHttp from '../../../shared/hooks/use-http';
-import NewTodoStatus from './NewTodoStatus';
+import TodoStatus from './TodoStatus';
 
 const TodoForm = () => {
   const dispatch = useAppDispatch();
@@ -44,7 +44,7 @@ const TodoForm = () => {
           <ArrowForward />
         </IconButton>
       </Paper>
-      <NewTodoStatus isLoading={isLoading} error={error} />
+      <TodoStatus isLoading={isLoading} error={error} />
     </>
   );
 };

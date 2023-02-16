@@ -8,7 +8,7 @@ interface INewTodoStatus {
 
 type ISeverity = 'info' | 'error' | 'warning' | 'success';
 
-const NewTodoStatus: FC<INewTodoStatus> = ({ isLoading, error }) => {
+const TodoStatus: FC<INewTodoStatus> = ({ isLoading, error }) => {
   const [message, setMessage] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [severity, setSeverity] = useState<ISeverity>('info');
@@ -24,14 +24,14 @@ const NewTodoStatus: FC<INewTodoStatus> = ({ isLoading, error }) => {
 
     if (isLoadingStart && !isLoading && error) {
       setSeverity('error');
-      setMessage('Не удалось создать задачу.');
+      setMessage('Ошибка!');
       setIsOpen(true);
       setIsLoadingStart(false);
     }
 
     if (isLoadingStart && !isLoading && !error) {
       setSeverity('success');
-      setMessage('Задача добавлена.');
+      setMessage('Готово!');
       setIsOpen(true);
       setIsLoadingStart(false);
     }
@@ -50,4 +50,4 @@ const NewTodoStatus: FC<INewTodoStatus> = ({ isLoading, error }) => {
   );
 };
 
-export default NewTodoStatus;
+export default TodoStatus;
