@@ -1,15 +1,26 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { List, Typography } from '@mui/material';
+import { List } from '@mui/material';
 
 import TodoItem from './TodoItem';
-import { RootState } from '../../../app/store';
+import LoadingInfo from './LoadingInfo';
+
+import { RootState, useAppDispatch } from '../../../app/store';
+import { getTodos } from '../store';
+import useHttp from '../../../shared/hooks/use-http';
 
 const TodosList = () => {
+  const dispatch = useAppDispatch();
+  const { isLoading, error, sendRequest } = useHttp();
   const todos = useSelector((state: RootState) => state.todos);
 
-  if (todos.length === 0) {
-    return <Typography variant='h5' mt={5} sx={{textAlign: 'center' }} color='grey'>Задач нет, пора создать новые!</Typography>;
-  }
+  useEffect(() => {
+    dispatch(getTodos(sendRequest));
+  }, []);
+
+  if (isLoading) return <LoadingInfo info="Загрузка..." />;
+  if (!isLoading && error) return <LoadingInfo info="Что-то пошло не так." />;
+  if (todos.length === 0) return <LoadingInfo info="Задач нет, пора создать новые!" />;
 
   return (
     <List>

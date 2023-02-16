@@ -1,6 +1,5 @@
 import { Container, Typography } from '@mui/material';
-import TodoForm from '../features/todos/components/TodoForm';
-import TodosList from '../features/todos/components/TodosList';
+import { Todos } from '../features/todos';
 
 const App = () => {
   return (
@@ -12,8 +11,7 @@ const App = () => {
       >
         Feature-Driven Todos
       </Typography>
-      <TodoForm />
-      <TodosList />
+      <Todos />
     </Container>
   );
 };

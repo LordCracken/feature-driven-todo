@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
-import todosSlice from '../features/todos/store';
+import { todosReducer } from '../features/todos';
 
 const store = configureStore({
   reducer: {
-    todos: todosSlice,
+    todos: todosReducer,
   },
 });
 

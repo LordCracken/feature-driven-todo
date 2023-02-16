@@ -8,11 +8,11 @@ export interface ITodo {
 
 const todosSlice = createSlice({
   name: 'todos',
-  initialState: [
-    { id: '0', content: 'Create Todos App', completed: false },
-    { id: '1', content: 'Learn React', completed: true },
-  ] as ITodo[],
+  initialState: [] as ITodo[],
   reducers: {
+    setTodos: (state, action) => {
+      return action.payload;
+    },
     checkTodo: (state, action) => {
       const todo = state.find(item => item.id === action.payload);
       if (todo) {
@@ -29,4 +29,4 @@ const todosSlice = createSlice({
 });
 
 export const todosActions = todosSlice.actions;
-export default todosSlice.reducer;
+export const todosReducer = todosSlice.reducer;
