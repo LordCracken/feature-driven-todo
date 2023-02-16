@@ -9,6 +9,10 @@ interface IServerTodos {
   };
 }
 
+interface ITodoData {
+  name: UniqueID;
+}
+
 const url =
   'https://feature-driven-todos-default-rtdb.europe-west1.firebasedatabase.app/todos.json';
 
@@ -29,4 +33,29 @@ export const getTodos = (sendRequest: ISendRequest) => (dispatch: Dispatch) => {
   };
 
   sendRequest({ url }, transformTodos);
+};
+
+export const sendNewTodo = (todoContent: string, sendRequest: ISendRequest) => {
+  return (dispatch: Dispatch) => {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    const createTodo = (todoContent: string, todoData: unknown) => {
+      const data = todoData as ITodoData;
+      const generatedId = data.name;
+      const createdTodo = {
+        id: generatedId,
+        content: todoContent,
+        completed: false,
+      };
+
+      dispatch(todosActions.addNewTodo(createdTodo));
+    };
+
+    sendRequest(
+      { url, method: 'POST', headers, body: { content: todoContent } },
+      createTodo.bind(null, todoContent),
+    );
+  };
 };
