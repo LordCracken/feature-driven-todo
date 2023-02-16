@@ -10,17 +10,19 @@ import {
 import { DeleteOutline } from '@mui/icons-material';
 
 import { useAppDispatch } from '../../../app/store';
-import { ITodo, todosActions } from '../store';
-
+import { checkTodo, ITodo, removeTodo } from '../store';
+import useHttp from '../../../shared/hooks/use-http';
+import TodoStatus from './TodoStatus';
 const TodoItem: FC<ITodo> = ({ id, content, completed }) => {
   const dispatch = useAppDispatch();
+  const { isLoading, error, sendRequest } = useHttp();
 
   const checkTodoHandler = (id: UniqueID) => {
-    dispatch(todosActions.checkTodo(id));
+    dispatch(checkTodo(id, completed, sendRequest));
   };
 
   const deleteTodoHandler = () => {
-    dispatch(todosActions.removeTodo(id));
+    dispatch(removeTodo(id, sendRequest));
   };
 
   return (

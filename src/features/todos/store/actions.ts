@@ -54,8 +54,38 @@ export const sendNewTodo = (todoContent: string, sendRequest: ISendRequest) => {
     };
 
     sendRequest(
-      { url, method: 'POST', headers, body: { content: todoContent } },
+      { url, method: 'POST', headers, body: { content: todoContent, completed: false } },
       createTodo.bind(null, todoContent),
+    );
+  };
+};
+
+export const removeTodo = (todoId: UniqueID, sendRequest: ISendRequest) => {
+  return (dispatch: Dispatch) => {
+    const todoUrl = url.split('.json').at(0) + `/${todoId}.json`;
+
+    const removeTodo = (todoId: UniqueID) => {
+      dispatch(todosActions.removeTodo(todoId));
+    };
+
+    sendRequest({ url: todoUrl, method: 'DELETE' }, removeTodo.bind(null, todoId));
+  };
+};
+
+export const checkTodo = (todoId: UniqueID, completed: boolean, sendRequest: ISendRequest) => {
+  return (dispatch: Dispatch) => {
+    const todoUrl = url.split('.json').at(0) + `/${todoId}.json`;
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    const checkTodo = (todoId: UniqueID) => {
+      dispatch(todosActions.checkTodo(todoId));
+    };
+
+    sendRequest(
+      { url: todoUrl, method: 'PATCH', headers, body: { completed: !completed } },
+      checkTodo.bind(null, todoId),
     );
   };
 };
