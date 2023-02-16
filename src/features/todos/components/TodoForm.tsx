@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { IconButton, InputBase, Paper } from '@mui/material';
+import { ArrowForward } from '@mui/icons-material';
 
 import { useAppDispatch } from '../../../app/store';
 import { todosActions } from '../store';
-import { ArrowForward } from '@mui/icons-material';
 
 const TodoForm = () => {
   const dispatch = useAppDispatch();
@@ -17,14 +17,16 @@ const TodoForm = () => {
   const submitHandler = (event: FormEvent) => {
     event.preventDefault();
 
-    const newTodo = {
-      id: performance.now(),
-      content: value,
-      completed: false,
-    };
+    if (value.length > 0) {
+      const newTodo = {
+        id: performance.now(),
+        content: value,
+        completed: false,
+      };
 
-    dispatch(todosActions.addNewTodo(newTodo));
-    setValue('');
+      dispatch(todosActions.addNewTodo(newTodo));
+      setValue('');
+    }
   };
 
   return (
