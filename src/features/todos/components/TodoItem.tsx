@@ -24,19 +24,22 @@ const TodoItem: FC<ITodo> = ({ id, content, completed }) => {
   };
 
   return (
-    <ListItem>
-      <ListItemButton role="checkbox" dense onClick={checkTodoHandler.bind(null, id)}>
-        <ListItemIcon>
-          <Checkbox edge="start" checked={completed ?? false} tabIndex={-1} disableRipple />
-        </ListItemIcon>
-        <ListItemText id={id} primary={content} />
-        <ListItemIcon>
+    <>
+      <ListItem>
+        <ListItemButton role="checkbox" dense onClick={checkTodoHandler.bind(null, id)}>
+          <ListItemIcon>
+            <Checkbox edge="start" checked={completed ?? false} tabIndex={-1} disableRipple />
+          </ListItemIcon>
+          <ListItemText id={id} primary={content} />
+        </ListItemButton>
+        <ListItemIcon sx={{ position: 'absolute', right: 0 }}>
           <IconButton onClick={deleteTodoHandler}>
             <DeleteOutline />
           </IconButton>
         </ListItemIcon>
-      </ListItemButton>
-    </ListItem>
+      </ListItem>
+      <TodoStatus isLoading={isLoading} error={error} />
+    </>
   );
 };
 
