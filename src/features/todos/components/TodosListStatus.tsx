@@ -5,10 +5,10 @@ interface ILoadingInfo {
   info: string;
 }
 
-const LoadingInfo: FC<ILoadingInfo> = ({ info }) => (
+const TodosListStatus: FC<ILoadingInfo> = ({ info }) => (
   <Typography variant="h5" mt={5} sx={{ textAlign: 'center' }} color="grey">
     {info}
   </Typography>
 );
 
-export default LoadingInfo;
+export default TodosListStatus;

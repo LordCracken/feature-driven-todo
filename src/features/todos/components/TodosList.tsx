@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { List } from '@mui/material';
 
 import TodoItem from './TodoItem';
-import LoadingInfo from './LoadingInfo';
+import TodosListStatus from './TodosListStatus';
 
 import { RootState, useAppDispatch } from '../../../app/store';
 import { getTodos } from '../store';
@@ -18,9 +18,9 @@ const TodosList = () => {
     dispatch(getTodos(sendRequest));
   }, []);
 
-  if (isLoading) return <LoadingInfo info="Загрузка..." />;
-  if (!isLoading && error) return <LoadingInfo info="Что-то пошло не так." />;
-  if (todos.length === 0) return <LoadingInfo info="Задач нет, пора создать новые!" />;
+  if (isLoading) return <TodosListStatus info="Загрузка..." />;
+  if (!isLoading && error) return <TodosListStatus info="Что-то пошло не так." />;
+  if (todos.length === 0) return <TodosListStatus info="Задач нет, пора создать новые!" />;
 
   return (
     <List>
