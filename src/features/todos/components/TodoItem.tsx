@@ -27,7 +27,7 @@ const TodoItem: FC<ITodo> = ({ id, content, completed }) => {
     <ListItem>
       <ListItemButton role="checkbox" dense onClick={checkTodoHandler.bind(null, id)}>
         <ListItemIcon>
-          <Checkbox edge="start" checked={completed} tabIndex={-1} disableRipple />
+          <Checkbox edge="start" checked={completed ?? false} tabIndex={-1} disableRipple />
         </ListItemIcon>
         <ListItemText id={id} primary={content} />
         <ListItemIcon>
