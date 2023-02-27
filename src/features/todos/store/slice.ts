@@ -10,7 +10,7 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState: [] as ITodo[],
   reducers: {
-    setTodos: (state, action) => {
+    setTodos: (_state, action) => {
       return action.payload;
     },
     checkTodo: (state, action) => {
