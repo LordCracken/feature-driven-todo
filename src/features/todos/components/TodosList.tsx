@@ -1,20 +1,19 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { List } from '@mui/material';
 
+import { List } from '@mui/material';
 import TodoItem from './TodoItem';
 import TodosListStatus from './TodosListStatus';
 
 import { RootState, useAppDispatch } from '../../../app/store';
 import { getTodos } from '../store';
-import useHttp from '../../../shared/hooks/use-http';
 
 const TodosList = () => {
   const dispatch = useAppDispatch();
   const todos = useSelector((state: RootState) => state.todos.list);
 
   useEffect(() => {
-    dispatch(getTodos(sendRequest));
+    dispatch(getTodos());
   }, []);
 
   if (isLoading) return <TodosListStatus info="Загрузка..." />;

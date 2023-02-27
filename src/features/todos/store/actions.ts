@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { todosActions } from './slice';
-import { ISendRequest } from '../../../shared/hooks/use-http';
+import { sendTodosRequest } from './utils';
 
 interface IServerTodos {
   [key: string]: {
@@ -16,34 +16,36 @@ interface ITodoData {
 const url =
   'https://feature-driven-todos-default-rtdb.europe-west1.firebasedatabase.app/todos.json';
 
-export const getTodos = (sendRequest: ISendRequest) => (dispatch: Dispatch) => {
-  const transformTodos = (todos: unknown) => {
+export const getTodos = () => async (dispatch: Dispatch) => {
+  const transformTodos = (todos: IServerTodos) => {
     const loadedTodos = [];
-    const data = todos as IServerTodos;
 
-    for (const todoKey in data) {
+    for (const todoKey in todos) {
       loadedTodos.push({
         id: todoKey,
-        content: data[todoKey].content,
-        completed: data[todoKey].completed,
+        content: todos[todoKey].content,
+        completed: todos[todoKey].completed,
       });
     }
 
     dispatch(todosActions.setTodos(loadedTodos));
   };
 
-  sendRequest({ url }, transformTodos);
+  const response = await sendTodosRequest(dispatch, { url });
+  if (response?.ok) {
+    const data = await response.json();
+    transformTodos(data);
+  }
 };
 
-export const sendNewTodo = (todoContent: string, sendRequest: ISendRequest) => {
-  return (dispatch: Dispatch) => {
+export const sendNewTodo = (todoContent: string) => {
+  return async (dispatch: Dispatch) => {
     const headers = {
       'Content-Type': 'application/json',
     };
 
-    const createTodo = (todoContent: string, todoData: unknown) => {
-      const data = todoData as ITodoData;
-      const generatedId = data.name;
+    const createTodo = (todoContent: string, todoData: ITodoData) => {
+      const generatedId = todoData.name;
       const createdTodo = {
         id: generatedId,
         content: todoContent,
@@ -53,39 +55,51 @@ export const sendNewTodo = (todoContent: string, sendRequest: ISendRequest) => {
       dispatch(todosActions.addNewTodo(createdTodo));
     };
 
-    sendRequest(
-      { url, method: 'POST', headers, body: { content: todoContent, completed: false } },
-      createTodo.bind(null, todoContent),
+    const response = await sendTodosRequest(
+      dispatch,
+      {
+        url,
+        method: 'POST',
+        headers,
+        body: { content: todoContent, completed: false },
+      },
+      'Задача добавлена!',
+      'Не удалось создать задачу',
     );
+    if (response?.ok) {
+      const data = await response.json();
+      createTodo(todoContent, data);
+    }
   };
 };
 
-export const removeTodo = (todoId: UniqueID, sendRequest: ISendRequest) => {
-  return (dispatch: Dispatch) => {
+export const removeTodo = (todoId: UniqueID) => {
+  return async (dispatch: Dispatch) => {
     const todoUrl = url.split('.json').at(0) + `/${todoId}.json`;
 
-    const removeTodo = (todoId: UniqueID) => {
-      dispatch(todosActions.removeTodo(todoId));
-    };
-
-    sendRequest({ url: todoUrl, method: 'DELETE' }, removeTodo.bind(null, todoId));
+    const response = await sendTodosRequest(
+      dispatch,
+      { url: todoUrl, method: 'DELETE' },
+      'Задача удалена',
+      'Не удалось удалить задачу',
+    );
+    if (response?.ok) dispatch(todosActions.removeTodo(todoId));
   };
 };
 
-export const checkTodo = (todoId: UniqueID, completed: boolean, sendRequest: ISendRequest) => {
-  return (dispatch: Dispatch) => {
+export const checkTodo = (todoId: UniqueID, completed: boolean) => {
+  return async (dispatch: Dispatch) => {
     const todoUrl = url.split('.json').at(0) + `/${todoId}.json`;
     const headers = {
       'Content-Type': 'application/json',
     };
 
-    const checkTodo = (todoId: UniqueID) => {
-      dispatch(todosActions.checkTodo(todoId));
-    };
-
-    sendRequest(
-      { url: todoUrl, method: 'PATCH', headers, body: { completed: !completed } },
-      checkTodo.bind(null, todoId),
-    );
+    const response = await sendTodosRequest(dispatch, {
+      url: todoUrl,
+      method: 'PATCH',
+      headers,
+      body: { completed: !completed },
+    });
+    if (response?.ok) dispatch(todosActions.checkTodo(todoId));
   };
 };

@@ -9,7 +9,6 @@ import TodoStatus from './TodoStatus';
 
 const TodoForm = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, error, sendRequest } = useHttp();
   const [value, setValue] = useState('');
 
   const changeValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +20,7 @@ const TodoForm = () => {
     event.preventDefault();
 
     if (value.length > 0) {
-      dispatch(sendNewTodo(value, sendRequest));
+      dispatch(sendNewTodo(value));
       setValue('');
     }
   };

@@ -15,14 +15,13 @@ import useHttp from '../../../shared/hooks/use-http';
 import TodoStatus from './TodoStatus';
 const TodoItem: FC<ITodo> = ({ id, content, completed }) => {
   const dispatch = useAppDispatch();
-  const { isLoading, error, sendRequest } = useHttp();
 
   const checkTodoHandler = (id: UniqueID) => {
-    dispatch(checkTodo(id, completed, sendRequest));
+    dispatch(checkTodo(id, completed));
   };
 
   const deleteTodoHandler = () => {
-    dispatch(removeTodo(id, sendRequest));
+    dispatch(removeTodo(id));
   };
 
   return (
