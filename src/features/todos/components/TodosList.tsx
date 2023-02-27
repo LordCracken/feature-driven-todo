@@ -11,8 +11,7 @@ import useHttp from '../../../shared/hooks/use-http';
 
 const TodosList = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, error, sendRequest } = useHttp();
-  const todos = useSelector((state: RootState) => state.todos);
+  const todos = useSelector((state: RootState) => state.todos.list);
 
   useEffect(() => {
     dispatch(getTodos(sendRequest));
