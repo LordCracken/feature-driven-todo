@@ -11,8 +11,7 @@ import { DeleteOutline } from '@mui/icons-material';
 
 import { useAppDispatch } from '../../../app/store';
 import { checkTodo, ITodo, removeTodo } from '../store';
-import useHttp from '../../../shared/hooks/use-http';
-import TodoStatus from './TodoStatus';
+
 const TodoItem: FC<ITodo> = ({ id, content, completed }) => {
   const dispatch = useAppDispatch();
 
@@ -25,22 +24,19 @@ const TodoItem: FC<ITodo> = ({ id, content, completed }) => {
   };
 
   return (
-    <>
-      <ListItem>
-        <ListItemButton role="checkbox" dense onClick={checkTodoHandler.bind(null, id)}>
-          <ListItemIcon>
-            <Checkbox edge="start" checked={completed ?? false} tabIndex={-1} disableRipple />
-          </ListItemIcon>
-          <ListItemText id={id} primary={content} />
-        </ListItemButton>
-        <ListItemIcon sx={{ position: 'absolute', right: 0 }}>
-          <IconButton onClick={deleteTodoHandler}>
-            <DeleteOutline />
-          </IconButton>
+    <ListItem>
+      <ListItemButton role="checkbox" dense onClick={checkTodoHandler.bind(null, id)}>
+        <ListItemIcon>
+          <Checkbox edge="start" checked={completed ?? false} tabIndex={-1} disableRipple />
         </ListItemIcon>
-      </ListItem>
-      <TodoStatus isLoading={isLoading} error={error} />
-    </>
+        <ListItemText id={id} primary={content} />
+      </ListItemButton>
+      <ListItemIcon sx={{ position: 'absolute', right: 0 }}>
+        <IconButton onClick={deleteTodoHandler}>
+          <DeleteOutline />
+        </IconButton>
+      </ListItemIcon>
+    </ListItem>
   );
 };
 

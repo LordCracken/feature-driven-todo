@@ -1,41 +1,36 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import { Alert, Snackbar } from '@mui/material';
 
-interface INewTodoStatus {
-  isLoading: boolean;
-  error: string | null;
-}
+import { RootState } from '../../../app/store';
+import { TodosStatuses } from '../store';
 
 type ISeverity = 'info' | 'error' | 'warning' | 'success';
 
-const TodoStatus: FC<INewTodoStatus> = ({ isLoading, error }) => {
-  const [message, setMessage] = useState('');
+const TodoStatus = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [severity, setSeverity] = useState<ISeverity>('info');
-  const [isLoadingStart, setIsLoadingStart] = useState(false);
+
+  const status = useSelector((state: RootState) => state.todos.status);
+  const message = useSelector((state: RootState) => state.todos.statusMsg);
 
   useEffect(() => {
-    if (isLoading) {
-      setIsLoadingStart(true);
+    if (status === TodosStatuses.loading) {
       setSeverity('info');
-      setMessage('Загрузка...');
       setIsOpen(true);
     }
 
-    if (isLoadingStart && !isLoading && error) {
+    if (status === TodosStatuses.error) {
       setSeverity('error');
-      setMessage('Ошибка!');
       setIsOpen(true);
-      setIsLoadingStart(false);
     }
 
-    if (isLoadingStart && !isLoading && !error) {
+    if (status === TodosStatuses.success) {
       setSeverity('success');
-      setMessage('Готово!');
       setIsOpen(true);
-      setIsLoadingStart(false);
     }
-  }, [isLoading]);
+  }, [status]);
 
   const closeSnackHandler = () => {
     setIsOpen(false);

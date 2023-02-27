@@ -4,8 +4,6 @@ import { ArrowForward } from '@mui/icons-material';
 
 import { useAppDispatch } from '../../../app/store';
 import { sendNewTodo } from '../store';
-import useHttp from '../../../shared/hooks/use-http';
-import TodoStatus from './TodoStatus';
 
 const TodoForm = () => {
   const dispatch = useAppDispatch();
@@ -26,25 +24,22 @@ const TodoForm = () => {
   };
 
   return (
-    <>
-      <Paper
-        component="form"
-        sx={{ p: '5px 10px', display: 'flex', alignItems: 'center' }}
-        onSubmit={submitHandler}
-      >
-        <InputBase
-          sx={{ flex: 1 }}
-          fullWidth
-          placeholder="Add New Todo"
-          value={value}
-          onChange={changeValueHandler}
-        />
-        <IconButton type="submit" color="primary" sx={{ p: '10px' }}>
-          <ArrowForward />
-        </IconButton>
-      </Paper>
-      <TodoStatus isLoading={isLoading} error={error} />
-    </>
+    <Paper
+      component="form"
+      sx={{ p: '5px 10px', display: 'flex', alignItems: 'center' }}
+      onSubmit={submitHandler}
+    >
+      <InputBase
+        sx={{ flex: 1 }}
+        fullWidth
+        placeholder="Add New Todo"
+        value={value}
+        onChange={changeValueHandler}
+      />
+      <IconButton type="submit" color="primary" sx={{ p: '10px' }}>
+        <ArrowForward />
+      </IconButton>
+    </Paper>
   );
 };
 

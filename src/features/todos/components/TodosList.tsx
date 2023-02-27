@@ -16,16 +16,15 @@ const TodosList = () => {
     dispatch(getTodos());
   }, []);
 
-  if (isLoading) return <TodosListStatus info="Загрузка..." />;
-  if (!isLoading && error) return <TodosListStatus info="Что-то пошло не так." />;
-  if (todos.length === 0) return <TodosListStatus info="Задач нет, пора создать новые!" />;
-
   return (
-    <List>
-      {todos.map(todo => (
-        <TodoItem key={todo.id} {...todo} />
-      ))}
-    </List>
+    <>
+      {todos.length === 0 && <TodosListStatus />}
+      <List>
+        {todos.map(todo => (
+          <TodoItem key={todo.id} {...todo} />
+        ))}
+      </List>
+    </>
   );
 };
 
