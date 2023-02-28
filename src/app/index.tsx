@@ -1,18 +1,17 @@
-import { Container, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import { Todos } from '../features/todos';
+import Header from '../shared/components/Header';
+
+import './styles.scss';
 
 const App = () => {
   return (
-    <Container>
-      <Typography
-        variant="h3"
-        component="h1"
-        sx={{ mb: '20px', textAlign: 'center', fontSize: { xs: '1.5rem', md: '3rem' } }}
-      >
-        Feature-Driven Todos
-      </Typography>
-      <Todos />
-    </Container>
+    <>
+      <Header />
+      <Container sx={{ mt: '50px' }}>
+        <Todos />
+      </Container>
+    </>
   );
 };
 
