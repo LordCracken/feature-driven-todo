@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 import { todosReducer } from '../features/todos';
+import { userReducer } from '../features/user';
 
 const store = configureStore({
   reducer: {
     todos: todosReducer,
+    user: userReducer,
   },
 });
 
