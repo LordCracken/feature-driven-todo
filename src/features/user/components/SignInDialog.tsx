@@ -1,4 +1,3 @@
-import { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -48,20 +47,14 @@ const SignInDialog = () => {
     dispatch(userActions.switchModal());
   };
 
-  const emailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
+  const signInHandler = (signUp = false) => {
+    setEmailIsTouched();
+    setPasswordIsTouched();
 
-  const passwordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  const signUpHandler = () => {
-    dispatch(signUpAction(email, password));
-  };
-
-  const signInHandler = () => {
-    dispatch(signInAction(email, password));
+    if (!emailError && !passwordError && emailIsTouched && passwordIsTouched) {
+      const action = signUp ? signUpAction(email, password) : signInAction(email, password);
+      dispatch(action);
+    }
   };
 
   return (
@@ -97,10 +90,10 @@ const SignInDialog = () => {
           onBlur={setPasswordIsTouched}
         />
         <Stack spacing={{ sm: 2, xs: 1 }} direction={{ xs: 'column', sm: 'row' }}>
-          <Button variant="outlined" fullWidth onClick={signUpHandler}>
+          <Button variant="outlined" fullWidth onClick={() => signInHandler(true)}>
             Регистрация
           </Button>
-          <Button variant="contained" fullWidth onClick={signInHandler}>
+          <Button variant="contained" fullWidth onClick={() => signInHandler()}>
             Войти
           </Button>
         </Stack>
