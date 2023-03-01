@@ -14,6 +14,11 @@ const userSlice = createSlice({
     switchModal: state => {
       state.isModalOpen = !state.isModalOpen;
     },
+    signIn: (state, action) => {
+      state.id = action.payload;
+      state.isModalOpen = false;
+    },
+    signOut: () => initialState,
   },
 });
 
