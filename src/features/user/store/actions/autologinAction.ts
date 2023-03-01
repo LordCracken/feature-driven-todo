@@ -2,7 +2,7 @@ import { AuthErrorCodes } from 'firebase/auth';
 
 import { Dispatch } from '@reduxjs/toolkit';
 import { userActions, UserStatuses } from '../slice';
-import camelizeData from '../../../../shared/camelizeData';
+import camelizeData from '../../../../shared/utils/camelizeData';
 
 export const autologinAction = () => async (dispatch: Dispatch) => {
   dispatch(userActions.updateStatus({ status: UserStatuses.loading, message: 'Загрузка...' }));
