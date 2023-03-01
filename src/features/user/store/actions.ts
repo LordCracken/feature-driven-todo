@@ -1,29 +1,52 @@
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
 import { Dispatch } from '@reduxjs/toolkit';
-import { userActions } from './slice';
-import { signIn, signOut, signUp } from './utils';
+import { userActions, UserStatuses } from './slice';
 import camelizeData from '../../../shared/camelizeData';
 
 export const signUpUser = (email: Email, password: Password) => async (dispatch: Dispatch) => {
-  const user = await signUp(email, password);
-  if (user?.uid) {
-    dispatch(userActions.signIn(user.uid));
-    localStorage.setItem('refreshToken', user.refreshToken);
+  try {
+    const auth = getAuth();
+    const response = await createUserWithEmailAndPassword(auth, email, password);
+    dispatch(userActions.signIn(response.user.uid));
+    localStorage.setItem('refreshToken', response.user.refreshToken);
+  } catch (error) {
+    if (error instanceof Error) {
+      dispatch(userActions.updateStatus({ status: UserStatuses.error, message: error.message }));
+      console.log(error);
+    }
   }
 };
 
 export const signInUser = (email: Email, password: Password) => async (dispatch: Dispatch) => {
-  const user = await signIn(email, password);
-  if (user?.uid) {
-    dispatch(userActions.signIn(user.uid));
-    localStorage.setItem('refreshToken', user.refreshToken);
+  try {
+    const auth = getAuth();
+    const response = await signInWithEmailAndPassword(auth, email, password);
+    dispatch(userActions.signIn(response.user.uid));
+    localStorage.setItem('refreshToken', response.user.refreshToken);
+  } catch (error) {
+    if (error instanceof Error) {
+      dispatch(userActions.updateStatus({ status: UserStatuses.error, message: error.message }));
+      console.log(error);
+    }
   }
 };
 
 export const signOutUser = () => async (dispatch: Dispatch) => {
-  const isSignedOut = await signOut();
-  if (isSignedOut) {
+  try {
+    const auth = getAuth();
+    await signOut(auth);
     dispatch(userActions.signOut());
     localStorage.removeItem('refreshToken');
+  } catch (error) {
+    if (error instanceof Error) {
+      dispatch(userActions.updateStatus({ status: UserStatuses.error, message: error.message }));
+      console.log(error);
+    }
   }
 };
 
