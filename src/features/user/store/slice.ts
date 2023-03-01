@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface IUser {
-  name: string;
-  authToken: UniqueID;
+  id: UniqueID;
   isModalOpen: boolean;
 }
 
+const initialState: IUser = { id: '', isModalOpen: false };
+
 const userSlice = createSlice({
   name: 'user',
-  initialState: { name: '', authToken: '', isModalOpen: false } as IUser,
+  initialState: initialState,
   reducers: {
     switchModal: state => {
       state.isModalOpen = !state.isModalOpen;
