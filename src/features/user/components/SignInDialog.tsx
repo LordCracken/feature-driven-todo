@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -14,16 +15,35 @@ import {
 import { Close } from '@mui/icons-material';
 
 import { RootState, useAppDispatch } from '../../../app/store';
-import { userActions } from '../store/slice';
+import { userActions, signUpUser, signInUser } from '../store';
 
-const UserForm = () => {
+const SignInDialog = () => {
   const dispatch = useAppDispatch();
   const isOpen = useSelector((state: RootState) => state.user.isModalOpen);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const closeHandler = () => {
     dispatch(userActions.switchModal());
+  };
+
+  const emailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const passwordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const signUpHandler = () => {
+    dispatch(signUpUser(email, password));
+  };
+
+  const signInHandler = () => {
+    dispatch(signInUser(email, password));
   };
 
   return (
@@ -40,6 +60,8 @@ const UserForm = () => {
           label="Email"
           variant="standard"
           sx={{ display: 'flex', mb: '10px' }}
+          value={email}
+          onChange={emailChangeHandler}
         />
         <TextField
           id="password"
@@ -47,12 +69,14 @@ const UserForm = () => {
           label="Пароль"
           variant="standard"
           sx={{ display: 'flex', mb: '25px' }}
+          value={password}
+          onChange={passwordChangeHandler}
         />
         <Stack spacing={{ sm: 2, xs: 1 }} direction={{ xs: 'column', sm: 'row' }}>
-          <Button variant="outlined" fullWidth>
+          <Button variant="outlined" fullWidth onClick={signUpHandler}>
             Регистрация
           </Button>
-          <Button variant="contained" fullWidth>
+          <Button variant="contained" fullWidth onClick={signInHandler}>
             Войти
           </Button>
         </Stack>
@@ -61,4 +85,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default SignInDialog;
