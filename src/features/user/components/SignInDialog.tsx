@@ -15,7 +15,7 @@ import {
 import { Close } from '@mui/icons-material';
 
 import { RootState, useAppDispatch } from '../../../app/store';
-import { userActions, signUpUser, signInUser } from '../store';
+import { userActions, signInAction, signUpAction } from '../store';
 
 const SignInDialog = () => {
   const dispatch = useAppDispatch();
@@ -39,11 +39,11 @@ const SignInDialog = () => {
   };
 
   const signUpHandler = () => {
-    dispatch(signUpUser(email, password));
+    dispatch(signUpAction(email, password));
   };
 
   const signInHandler = () => {
-    dispatch(signInUser(email, password));
+    dispatch(signInAction(email, password));
   };
 
   return (

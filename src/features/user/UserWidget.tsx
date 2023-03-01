@@ -5,14 +5,14 @@ import UserControls from './components/UserControls';
 import SignInDialog from './components/SignInDialog';
 import SignOutDialog from './components/SignOutDialog';
 import { RootState, useAppDispatch } from '../../app/store';
-import { autologin } from './store';
+import { autologinAction } from './store';
 
 export const UserWidget = () => {
   const dispatch = useAppDispatch();
   const isAuthenticated = !!useSelector((state: RootState) => state.user.id);
 
   useEffect(() => {
-    dispatch(autologin());
+    dispatch(autologinAction());
   }, []);
 
   return (

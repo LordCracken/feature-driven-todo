@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 
 import { RootState, useAppDispatch } from '../../../app/store';
-import { signOutUser, userActions } from '../store';
+import { signOutAction, userActions } from '../store';
 
 const SignOutDialog = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ const SignOutDialog = () => {
   };
 
   const signOutHandler = () => {
-    dispatch(signOutUser());
+    dispatch(signOutAction());
   };
 
   return (
