@@ -2,10 +2,9 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { GetState } from '../../../../app/store';
 import { todosActions } from '../slice';
 
-import { v4 as generateId } from 'uuid';
-import { sendTodosRequest } from '../utils';
-
 import { baseUrl } from './index';
+import { v4 as generateId } from 'uuid';
+import { Statuses } from '../../../../shared/components/Status';
 
 export const sendNewTodo = (todoContent: string) => {
   return async (dispatch: Dispatch, getState: GetState) => {
@@ -29,23 +28,29 @@ export const sendNewTodo = (todoContent: string) => {
     }
 
     const url = `${baseUrl}/${uid}.json`;
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    const response = await sendTodosRequest(
-      dispatch,
-      {
-        url,
+
+    dispatch(todosActions.updateStatus({ status: Statuses.loading, message: 'Загрузка...' }));
+
+    try {
+      const response = await fetch(url, {
         method: 'POST',
-        headers,
-        body: { content: todoContent, completed: false },
-      },
-      'Задача добавлена!',
-      'Не удалось создать задачу',
-    );
-    if (response?.ok) {
-      const data = await response.json();
-      createTodo(todoContent, data.name);
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: todoContent, completed: false }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        createTodo(todoContent, data.name);
+        dispatch(
+          todosActions.updateStatus({ status: Statuses.success, message: 'Задача добавлена!' }),
+        );
+      }
+    } catch (error) {
+      dispatch(
+        todosActions.updateStatus({ status: Statuses.error, message: 'Не удалось создать задачу' }),
+      );
     }
   };
 };
