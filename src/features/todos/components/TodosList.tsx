@@ -11,14 +11,15 @@ import { getTodos } from '../store';
 const TodosList = () => {
   const dispatch = useAppDispatch();
   const todos = useSelector((state: RootState) => state.todos.list);
+  const uid = useSelector((state: RootState) => state.todos.uid);
 
   useEffect(() => {
     dispatch(getTodos());
-  }, []);
+  }, [uid]);
 
   return (
     <>
-      {todos.length === 0 && <TodosListStatus />}
+      {(todos.length === 0 || !uid) && <TodosListStatus />}
       <List>
         {todos.map(todo => (
           <TodoItem key={todo.id} {...todo} />

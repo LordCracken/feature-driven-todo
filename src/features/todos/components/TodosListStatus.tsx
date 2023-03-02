@@ -1,24 +1,26 @@
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../app/store';
-import { TodosStatuses } from '../store';
-
 import { Typography } from '@mui/material';
+import { Statuses } from '../../../shared/components/Status';
 
 const TodosListStatus = () => {
+  const uid = useSelector((state: RootState) => state.todos.uid);
   const status = useSelector((state: RootState) => state.todos.status);
-  let info = '';
+  let info = 'Авторизуйтесь, чтобы сохранить задачи.';
 
-  switch (status) {
-    case TodosStatuses.success:
-      info = 'Задач нет, пора создать новые!';
-      break;
-    case TodosStatuses.loading:
-      info = 'Загрузка...';
-      break;
-    case TodosStatuses.error:
-      info = 'Что-то пошло не так.';
-      break;
+  if (uid) {
+    switch (status) {
+      case Statuses.success:
+        info = 'Задач нет, пора создать новые!';
+        break;
+      case Statuses.loading:
+        info = 'Загрузка...';
+        break;
+      case Statuses.error:
+        info = 'Что-то пошло не так.';
+        break;
+    }
   }
 
   return (

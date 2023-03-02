@@ -1,5 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { todosActions, TodosStatuses } from './slice';
+import { todosActions } from './slice';
+import { Statuses } from '../../../shared/components/Status';
 
 interface IReqConf<Body> {
   url: string;
@@ -14,7 +15,7 @@ export const sendTodosRequest = async <ReqBody>(
   successMsg = 'Готово!',
   failMsg = 'Ошибка!',
 ) => {
-  dispatch(todosActions.updateStatus({ status: TodosStatuses.loading, message: 'Загрузка...' }));
+  dispatch(todosActions.updateStatus({ status: Statuses.loading, message: 'Загрузка...' }));
 
   try {
     const { url, method, headers, body } = requestConfig;
@@ -25,11 +26,11 @@ export const sendTodosRequest = async <ReqBody>(
     });
 
     if (response.ok) {
-      dispatch(todosActions.updateStatus({ status: TodosStatuses.success, message: successMsg }));
+      dispatch(todosActions.updateStatus({ status: Statuses.success, message: successMsg }));
     }
 
     return response;
   } catch (error) {
-    dispatch(todosActions.updateStatus({ status: TodosStatuses.error, message: failMsg }));
+    dispatch(todosActions.updateStatus({ status: Statuses.error, message: failMsg }));
   }
 };

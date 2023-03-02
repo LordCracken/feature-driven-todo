@@ -32,7 +32,7 @@ const TodoForm = () => {
       <InputBase
         sx={{ flex: 1 }}
         fullWidth
-        placeholder="Add New Todo"
+        placeholder="Новая задача"
         value={value}
         onChange={changeValueHandler}
       />
