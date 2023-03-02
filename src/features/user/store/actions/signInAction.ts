@@ -11,9 +11,8 @@ export const signInAction = (email: Email, password: Password) => async (dispatc
 
   try {
     const auth = getAuth();
-    const response = await signInWithEmailAndPassword(auth, email, password);
-    dispatch(userActions.signIn(response.user.uid));
-    localStorage.setItem('refreshToken', response.user.refreshToken);
+    await signInWithEmailAndPassword(auth, email, password);
+    dispatch(userActions.signIn());
     dispatch(userActions.updateStatus({ status: Statuses.success, message: 'С возвращением!' }));
   } catch (error) {
     switch ((error as AuthError).code) {

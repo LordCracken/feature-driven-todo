@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Statuses } from '../../../shared/components/Status';
 
 interface IUser {
-  id: UniqueID;
+  isAuthenticated: boolean;
   isModalOpen: boolean;
   status?: Statuses;
   statusMsg?: string;
 }
 
-const initialState: IUser = { id: '', isModalOpen: false };
+const initialState: IUser = { isAuthenticated: false, isModalOpen: false };
 
 const userSlice = createSlice({
   name: 'user',
@@ -21,8 +21,8 @@ const userSlice = createSlice({
     switchModal: state => {
       state.isModalOpen = !state.isModalOpen;
     },
-    signIn: (state, action) => {
-      state.id = action.payload;
+    signIn: state => {
+      state.isAuthenticated = true;
       state.isModalOpen = false;
     },
     signOut: () => initialState,

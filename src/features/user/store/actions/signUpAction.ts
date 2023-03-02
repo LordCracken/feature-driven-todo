@@ -11,9 +11,8 @@ export const signUpAction = (email: Email, password: Password) => async (dispatc
 
   try {
     const auth = getAuth();
-    const response = await createUserWithEmailAndPassword(auth, email, password);
-    dispatch(userActions.signIn(response.user.uid));
-    localStorage.setItem('refreshToken', response.user.refreshToken);
+    await createUserWithEmailAndPassword(auth, email, password);
+    dispatch(userActions.signIn());
     dispatch(userActions.updateStatus({ status: Statuses.success, message: 'Добро пожаловать!' }));
   } catch (error) {
     switch ((error as AuthError).code) {

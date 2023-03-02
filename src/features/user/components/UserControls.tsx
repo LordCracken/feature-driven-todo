@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 
 const UserMenu = () => {
   const dispatch = useAppDispatch();
-  const isAuthenticated = !!useSelector((state: RootState) => state.user.id);
+  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
 
   const openUserModalHandler = () => {
     dispatch(userActions.switchModal());
