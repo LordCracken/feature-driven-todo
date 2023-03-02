@@ -9,6 +9,7 @@ export interface ITodo {
 
 interface ITodosSlice {
   list: ITodo[];
+  uid?: UniqueID;
   status?: Statuses;
   statusMsg?: string;
 }
@@ -20,6 +21,10 @@ const todosSlice = createSlice({
     updateStatus: (state, action) => {
       state.status = action.payload.status;
       state.statusMsg = action.payload.message;
+    },
+    setUser: (state, action) => {
+      state.uid = action.payload;
+      state.list = [];
     },
     setTodos: (state, action) => {
       state.list = action.payload;

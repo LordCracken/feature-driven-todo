@@ -1,6 +1,8 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { todosActions } from './slice';
 import { sendTodosRequest } from './utils';
+import { GetState } from '../../../app/store';
+import { v4 as generateId } from 'uuid';
 
 interface IServerTodos {
   [key: string]: {
@@ -9,14 +11,18 @@ interface IServerTodos {
   };
 }
 
-interface ITodoData {
-  name: UniqueID;
-}
+const baseUrl = 'https://feature-driven-todos-default-rtdb.europe-west1.firebasedatabase.app';
 
-const url =
-  'https://feature-driven-todos-default-rtdb.europe-west1.firebasedatabase.app/todos.json';
+export const getTodos = () => async (dispatch: Dispatch, getState: GetState) => {
+  const uid = getState().todos.uid;
 
-export const getTodos = () => async (dispatch: Dispatch) => {
+  if (!uid) {
+    dispatch(todosActions.setTodos(JSON.parse(sessionStorage.getItem('todos') || '')));
+    return;
+  }
+
+  const url = `${baseUrl}/${uid}.json`;
+
   const transformTodos = (todos: IServerTodos) => {
     const loadedTodos = [];
 
@@ -39,15 +45,12 @@ export const getTodos = () => async (dispatch: Dispatch) => {
 };
 
 export const sendNewTodo = (todoContent: string) => {
-  return async (dispatch: Dispatch) => {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
+  return async (dispatch: Dispatch, getState: GetState) => {
+    const uid = getState().todos.uid;
 
-    const createTodo = (todoContent: string, todoData: ITodoData) => {
-      const generatedId = todoData.name;
+    const createTodo = (todoContent: string, todoId: UniqueID) => {
       const createdTodo = {
-        id: generatedId,
+        id: todoId,
         content: todoContent,
         completed: false,
       };
@@ -55,6 +58,17 @@ export const sendNewTodo = (todoContent: string) => {
       dispatch(todosActions.addNewTodo(createdTodo));
     };
 
+    if (!uid) {
+      createTodo(todoContent, generateId());
+      const todos = getState().todos.list;
+      sessionStorage.setItem('todos', JSON.stringify(todos));
+      return;
+    }
+
+    const url = `${baseUrl}/${uid}.json`;
+    const headers = {
+      'Content-Type': 'application/json',
+    };
     const response = await sendTodosRequest(
       dispatch,
       {
@@ -68,18 +82,26 @@ export const sendNewTodo = (todoContent: string) => {
     );
     if (response?.ok) {
       const data = await response.json();
-      createTodo(todoContent, data);
+      createTodo(todoContent, data.name);
     }
   };
 };
 
 export const removeTodo = (todoId: UniqueID) => {
-  return async (dispatch: Dispatch) => {
-    const todoUrl = url.split('.json').at(0) + `/${todoId}.json`;
+  return async (dispatch: Dispatch, getState: GetState) => {
+    const uid = getState().todos.uid;
 
+    if (!uid) {
+      dispatch(todosActions.removeTodo(todoId));
+      const todos = getState().todos.list;
+      sessionStorage.setItem('todos', JSON.stringify(todos));
+      return;
+    }
+
+    const url = `${baseUrl}/${uid}/${todoId}.json`;
     const response = await sendTodosRequest(
       dispatch,
-      { url: todoUrl, method: 'DELETE' },
+      { url, method: 'DELETE' },
       'Задача удалена',
       'Не удалось удалить задачу',
     );
@@ -88,14 +110,22 @@ export const removeTodo = (todoId: UniqueID) => {
 };
 
 export const checkTodo = (todoId: UniqueID, completed: boolean) => {
-  return async (dispatch: Dispatch) => {
-    const todoUrl = url.split('.json').at(0) + `/${todoId}.json`;
+  return async (dispatch: Dispatch, getState: GetState) => {
+    const uid = getState().todos.uid;
+
+    if (!uid) {
+      dispatch(todosActions.removeTodo(todoId));
+      const todos = getState().todos.list;
+      sessionStorage.setItem('todos', JSON.stringify(todos));
+      return;
+    }
+
+    const url = `${baseUrl}/${uid}/${todoId}.json`;
     const headers = {
       'Content-Type': 'application/json',
     };
-
     const response = await sendTodosRequest(dispatch, {
-      url: todoUrl,
+      url,
       method: 'PATCH',
       headers,
       body: { completed: !completed },
