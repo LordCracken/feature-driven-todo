@@ -1,5 +1,4 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { GetState } from '../../../../app/store';
 import { todosActions } from '../slice';
 
 import { baseUrl } from './index';
@@ -7,7 +6,7 @@ import { v4 as generateId } from 'uuid';
 import { Statuses } from '../../../../shared/components/Status';
 
 export const sendNewTodo = (todoContent: string) => {
-  return async (dispatch: Dispatch, getState: GetState) => {
+  return async (dispatch: Dispatch, getState: () => RootState) => {
     const uid = getState().todos.uid;
 
     const createTodo = (todoContent: string, todoId: UniqueID) => {

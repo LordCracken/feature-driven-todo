@@ -1,5 +1,4 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { GetState } from '../../../../app/store';
 import { todosActions } from '../slice';
 
 import { baseUrl } from './index';
@@ -12,7 +11,7 @@ interface IServerTodos {
   };
 }
 
-export const getTodos = () => async (dispatch: Dispatch, getState: GetState) => {
+export const getTodos = () => async (dispatch: Dispatch, getState: () => RootState) => {
   const uid = getState().todos.uid;
 
   if (!uid) {

@@ -1,12 +1,11 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { GetState } from '../../../../app/store';
 import { todosActions } from '../slice';
 
 import { baseUrl } from './index';
 import { Statuses } from '../../../../shared/components/Status';
 
 export const checkTodo = (todoId: UniqueID, completed: boolean) => {
-  return async (dispatch: Dispatch, getState: GetState) => {
+  return async (dispatch: Dispatch, getState: () => RootState) => {
     const uid = getState().todos.uid;
 
     if (!uid) {
