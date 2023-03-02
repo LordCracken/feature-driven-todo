@@ -1,14 +1,18 @@
 import { AuthErrorCodes } from 'firebase/auth';
 
 import { Dispatch } from '@reduxjs/toolkit';
-import { userActions, UserStatuses } from '../slice';
+import { userActions } from '../slice';
+
+import { AuthError } from './interfaces';
 import camelizeData from '../../../../shared/utils/camelizeData';
+import { Statuses } from '../../../../shared/components/Status';
 
 export const autologinAction = () => async (dispatch: Dispatch) => {
-  dispatch(userActions.updateStatus({ status: UserStatuses.loading, message: 'Загрузка...' }));
   const refreshToken = localStorage.getItem('refreshToken');
 
   if (refreshToken) {
+    dispatch(userActions.updateStatus({ status: Statuses.loading, message: 'Загрузка...' }));
+
     try {
       const response = await fetch(
         `https://securetoken.googleapis.com/v1/token?key=${process.env.REACT_APP_API_KEY}`,
@@ -22,28 +26,24 @@ export const autologinAction = () => async (dispatch: Dispatch) => {
 
       localStorage.setItem('refreshToken', refreshToken);
       dispatch(userActions.signIn(data.userId));
-      dispatch(
-        userActions.updateStatus({ status: UserStatuses.success, message: 'С возвращением!' }),
-      );
+      dispatch(userActions.updateStatus({ status: Statuses.success, message: 'С возвращением!' }));
     } catch (error) {
-      if (error instanceof Error) {
-        switch (error.message) {
-          case AuthErrorCodes.TOKEN_EXPIRED:
-            dispatch(
-              userActions.updateStatus({
-                status: UserStatuses.error,
-                message: 'Срок действия токена истёк',
-              }),
-            );
-            break;
-          default:
-            dispatch(
-              userActions.updateStatus({
-                status: UserStatuses.error,
-                message: 'Не удалось войти в аккаунт',
-              }),
-            );
-        }
+      switch ((error as AuthError).code) {
+        case AuthErrorCodes.TOKEN_EXPIRED:
+          dispatch(
+            userActions.updateStatus({
+              status: Statuses.error,
+              message: 'Срок действия токена истёк',
+            }),
+          );
+          break;
+        default:
+          dispatch(
+            userActions.updateStatus({
+              status: Statuses.error,
+              message: 'Не удалось войти в аккаунт',
+            }),
+          );
       }
     }
   }
