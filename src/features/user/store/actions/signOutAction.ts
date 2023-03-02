@@ -11,8 +11,9 @@ export const signOutAction = () => async (dispatch: Dispatch) => {
   try {
     const auth = getAuth();
     await signOut(auth);
+    await auth.updateCurrentUser(null);
+
     dispatch(userActions.signOut());
-    localStorage.removeItem('refreshToken');
     dispatch(userActions.updateStatus({ status: Statuses.success, message: 'До встречи!' }));
   } catch (error) {
     if (error instanceof Error) {
