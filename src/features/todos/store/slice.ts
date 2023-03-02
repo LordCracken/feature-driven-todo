@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-export enum TodosStatuses {
-  success,
-  loading,
-  error,
-}
+import { Statuses } from '../../../shared/components/Status';
 
 export interface ITodo {
   id: UniqueID;
@@ -14,7 +9,7 @@ export interface ITodo {
 
 interface ITodosSlice {
   list: ITodo[];
-  status?: TodosStatuses;
+  status?: Statuses;
   statusMsg?: string;
 }
 

@@ -1,22 +1,21 @@
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../app/store';
-import { TodosStatuses } from '../store';
-
 import { Typography } from '@mui/material';
+import { Statuses } from '../../../shared/components/Status';
 
 const TodosListStatus = () => {
   const status = useSelector((state: RootState) => state.todos.status);
   let info = '';
 
   switch (status) {
-    case TodosStatuses.success:
+    case Statuses.success:
       info = 'Задач нет, пора создать новые!';
       break;
-    case TodosStatuses.loading:
+    case Statuses.loading:
       info = 'Загрузка...';
       break;
-    case TodosStatuses.error:
+    case Statuses.error:
       info = 'Что-то пошло не так.';
       break;
   }

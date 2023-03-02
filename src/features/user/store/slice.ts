@@ -1,15 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-export enum UserStatuses {
-  success,
-  loading,
-  error,
-}
+import { Statuses } from '../../../shared/components/Status';
 
 interface IUser {
   id: UniqueID;
   isModalOpen: boolean;
-  status?: UserStatuses;
+  status?: Statuses;
   statusMsg?: string;
 }
 
