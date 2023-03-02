@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-
 import {
   Button,
   Dialog,
@@ -13,13 +11,12 @@ import {
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
 
-import { RootState, useAppDispatch } from '../../../app/store';
+import { useAppDispatch, useAppSelector, useInput } from '../../../shared/hooks';
 import { userActions, signInAction, signUpAction } from '../store';
-import useInput from '../../../shared/hooks/useInput';
 
 const SignInDialog = () => {
   const dispatch = useAppDispatch();
-  const isOpen = useSelector((state: RootState) => state.user.isModalOpen);
+  const isOpen = useAppSelector(state => state.user.isModalOpen);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 

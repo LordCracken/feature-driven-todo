@@ -1,6 +1,5 @@
 import { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../shared/hooks';
 
 import TodoForm from './components/TodoForm';
 import TodosList from './components/TodosList';
@@ -13,8 +12,8 @@ interface ITodos {
 
 export const Todos: FC<ITodos> = ({ uid }) => {
   const dispatch = useAppDispatch();
-  const status = useSelector((state: RootState) => state.todos.status);
-  const message = useSelector((state: RootState) => state.todos.statusMsg);
+  const status = useAppSelector(state => state.todos.status);
+  const message = useAppSelector(state => state.todos.statusMsg);
 
   useEffect(() => {
     dispatch(todosActions.setUser(uid));

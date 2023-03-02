@@ -1,17 +1,16 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import { List } from '@mui/material';
 import TodoItem from './TodoItem';
 import TodosListStatus from './TodosListStatus';
 
-import { RootState, useAppDispatch } from '../../../app/store';
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks';
 import { getTodos } from '../store';
 
 const TodosList = () => {
   const dispatch = useAppDispatch();
-  const todos = useSelector((state: RootState) => state.todos.list);
-  const uid = useSelector((state: RootState) => state.todos.uid);
+  const todos = useAppSelector(state => state.todos.list);
+  const uid = useAppSelector(state => state.todos.uid);
 
   useEffect(() => {
     dispatch(getTodos());

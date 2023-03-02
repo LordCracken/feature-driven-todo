@@ -1,11 +1,10 @@
 import { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import UserControls from './components/UserControls';
 import SignInDialog from './components/SignInDialog';
 import SignOutDialog from './components/SignOutDialog';
 
-import { RootState, useAppDispatch } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../shared/hooks';
 import { userActions } from './store';
 
 import Status from '../../shared/components/Status';
@@ -16,9 +15,9 @@ interface IUserWidget {
 
 export const UserWidget: FC<IUserWidget> = ({ uid }) => {
   const dispatch = useAppDispatch();
-  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
-  const status = useSelector((state: RootState) => state.user.status);
-  const message = useSelector((state: RootState) => state.user.statusMsg);
+  const isAuthenticated = useAppSelector(state => state.user.isAuthenticated);
+  const status = useAppSelector(state => state.user.status);
+  const message = useAppSelector(state => state.user.statusMsg);
 
   useEffect(() => {
     if (uid) {

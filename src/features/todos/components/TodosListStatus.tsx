@@ -1,12 +1,10 @@
-import { useSelector } from 'react-redux';
-
-import { RootState } from '../../../app/store';
 import { Typography } from '@mui/material';
 import { Statuses } from '../../../shared/components/Status';
+import { useAppSelector } from '../../../shared/hooks';
 
 const TodosListStatus = () => {
-  const uid = useSelector((state: RootState) => state.todos.uid);
-  const status = useSelector((state: RootState) => state.todos.status);
+  const uid = useAppSelector(state => state.todos.uid);
+  const status = useAppSelector(state => state.todos.status);
   let info = 'Авторизуйтесь, чтобы сохранить задачи.';
 
   if (uid) {

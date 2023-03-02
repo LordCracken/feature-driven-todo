@@ -1,12 +1,11 @@
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../../app/store';
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks';
 import { userActions } from '../store';
 
 import { Button } from '@mui/material';
 
 const UserMenu = () => {
   const dispatch = useAppDispatch();
-  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
+  const isAuthenticated = useAppSelector(state => state.user.isAuthenticated);
 
   const openUserModalHandler = () => {
     dispatch(userActions.switchModal());

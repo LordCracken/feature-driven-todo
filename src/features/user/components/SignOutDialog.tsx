@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-
 import {
   Button,
   Dialog,
@@ -9,12 +7,12 @@ import {
   DialogTitle,
 } from '@mui/material';
 
-import { RootState, useAppDispatch } from '../../../app/store';
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks';
 import { signOutAction, userActions } from '../store';
 
 const SignOutDialog = () => {
   const dispatch = useAppDispatch();
-  const isOpen = useSelector((state: RootState) => state.user.isModalOpen);
+  const isOpen = useAppSelector(state => state.user.isModalOpen);
 
   const closeHandler = () => {
     dispatch(userActions.switchModal());
