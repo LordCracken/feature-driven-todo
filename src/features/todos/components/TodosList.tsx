@@ -4,7 +4,7 @@ import { List } from '@mui/material';
 import TodoItem from './TodoItem';
 import TodosListStatus from './TodosListStatus';
 
-import { useAppDispatch, useAppSelector } from '../../../shared/hooks';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { getTodos } from '../store';
 
 const TodosList = () => {

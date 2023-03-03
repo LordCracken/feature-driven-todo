@@ -4,10 +4,10 @@ import UserControls from './components/UserControls';
 import SignInDialog from './components/SignInDialog';
 import SignOutDialog from './components/SignOutDialog';
 
-import { useAppDispatch, useAppSelector } from '../../shared/hooks';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { userActions } from './store';
 
-import Status from '../../shared/components/Status';
+import {Status} from '@shared/components';
 
 interface IUserWidget {
   uid: string;

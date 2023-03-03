@@ -9,7 +9,7 @@ interface IStatusProps {
   position?: SnackbarOrigin;
 }
 
-const Status: FC<IStatusProps> = ({
+export const Status: FC<IStatusProps> = ({
   status,
   message,
   position = { vertical: 'bottom', horizontal: 'left' },
@@ -51,5 +51,3 @@ const Status: FC<IStatusProps> = ({
     </Snackbar>
   );
 };
-
-export default Status;

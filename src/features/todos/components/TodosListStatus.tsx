@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material';
-import { Statuses } from '../../../shared/components/Status';
-import { useAppSelector } from '../../../shared/hooks';
+import { useAppSelector } from '@shared/hooks';
 
 const TodosListStatus = () => {
   const uid = useAppSelector(state => state.todos.uid);

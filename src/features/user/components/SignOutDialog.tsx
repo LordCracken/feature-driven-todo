@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from '@mui/material';
 
-import { useAppDispatch, useAppSelector } from '../../../shared/hooks';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { signOutAction, userActions } from '../store';
 
 const SignOutDialog = () => {

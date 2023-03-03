@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../../shared/hooks';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { userActions } from '../store';
 
 import { Button } from '@mui/material';
