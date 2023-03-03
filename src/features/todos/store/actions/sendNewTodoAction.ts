@@ -1,8 +1,8 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { todosActions } from '../slice';
+import { v4 as generateId } from 'uuid';
 
 import { baseUrl } from './index';
-import { v4 as generateId } from 'uuid';
 
 export const sendNewTodo = (todoContent: string) => {
   return async (dispatch: Dispatch, getState: () => RootState) => {

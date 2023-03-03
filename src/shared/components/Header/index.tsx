@@ -1,7 +1,6 @@
 import { FC, PropsWithChildren } from 'react';
-
-import { AppBar, Container, Toolbar } from '@mui/material';
 import Logo from './Logo';
+import { AppBar, Container, Toolbar } from '@mui/material';
 
 export const Header: FC<PropsWithChildren> = ({ children }) => {
   return (

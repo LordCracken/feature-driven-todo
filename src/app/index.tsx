@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-import { Container } from '@mui/material';
 import { Todos } from '@features/todos';
 import { UserWidget } from '@features/user';
-import {Header} from '@shared/components';
+
+import { Container } from '@mui/material';
+import { Header } from '@shared/components';
 
 import './styles.scss';
 

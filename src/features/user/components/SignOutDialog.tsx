@@ -1,3 +1,5 @@
+import { signOutAction, userActions } from '../store';
+
 import {
   Button,
   Dialog,
@@ -6,9 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
-
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { signOutAction, userActions } from '../store';
 
 const SignOutDialog = () => {
   const dispatch = useAppDispatch();

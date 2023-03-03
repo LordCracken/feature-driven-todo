@@ -1,4 +1,7 @@
 import { FC } from 'react';
+
+import { checkTodo, ITodo, removeTodo } from '../store';
+
 import {
   Checkbox,
   IconButton,
@@ -8,9 +11,7 @@ import {
   ListItemText,
 } from '@mui/material';
 import { DeleteOutline } from '@mui/icons-material';
-
 import { useAppDispatch } from '@shared/hooks';
-import { checkTodo, ITodo, removeTodo } from '../store';
 
 const TodoItem: FC<ITodo> = ({ id, content, completed }) => {
   const dispatch = useAppDispatch();

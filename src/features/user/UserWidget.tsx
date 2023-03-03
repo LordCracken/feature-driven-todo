@@ -7,7 +7,7 @@ import SignOutDialog from './components/SignOutDialog';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { userActions } from './store';
 
-import {Status} from '@shared/components';
+import { Status } from '@shared/components';
 
 interface IUserWidget {
   uid: string;

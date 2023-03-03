@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 
-import { List } from '@mui/material';
+import { getTodos } from '../store';
 import TodoItem from './TodoItem';
 import TodosListStatus from './TodosListStatus';
 
+import { List } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@shared/hooks';
-import { getTodos } from '../store';
 
 const TodosList = () => {
   const dispatch = useAppDispatch();

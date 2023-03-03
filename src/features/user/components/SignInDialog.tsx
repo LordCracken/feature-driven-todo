@@ -1,3 +1,5 @@
+import { userActions, signInAction, signUpAction } from '../store';
+
 import {
   Button,
   Dialog,
@@ -10,9 +12,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
-
 import { useAppDispatch, useAppSelector, useInput } from '@shared/hooks';
-import { userActions, signInAction, signUpAction } from '../store';
 
 const SignInDialog = () => {
   const dispatch = useAppDispatch();

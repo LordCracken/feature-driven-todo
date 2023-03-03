@@ -1,9 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+
+import { sendNewTodo } from '../store';
+
 import { IconButton, InputBase, Paper } from '@mui/material';
 import { ArrowForward } from '@mui/icons-material';
-
 import { useAppDispatch } from '@shared/hooks';
-import { sendNewTodo } from '../store';
 
 const TodoForm = () => {
   const dispatch = useAppDispatch();

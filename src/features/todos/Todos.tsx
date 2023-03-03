@@ -1,10 +1,11 @@
 import { FC, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
 
+import { todosActions } from './store';
 import TodoForm from './components/TodoForm';
 import TodosList from './components/TodosList';
-import {Status} from '@shared/components';
-import { todosActions } from './store';
+
+import { Status } from '@shared/components';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
 
 interface ITodos {
   uid: string;

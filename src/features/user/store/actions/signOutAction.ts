@@ -1,6 +1,5 @@
-import { getAuth, signOut } from 'firebase/auth';
-
 import { Dispatch } from '@reduxjs/toolkit';
+import { getAuth, signOut } from 'firebase/auth';
 import { userActions } from '../slice';
 
 export const signOutAction = () => async (dispatch: Dispatch) => {

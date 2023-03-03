@@ -1,6 +1,5 @@
-import { AuthErrorCodes, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-
 import { Dispatch } from '@reduxjs/toolkit';
+import { AuthErrorCodes, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { userActions } from '../slice';
 
 export const signInAction = (email: Email, password: Password) => async (dispatch: Dispatch) => {

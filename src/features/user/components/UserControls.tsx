@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from '@shared/hooks';
 import { userActions } from '../store';
 
 import { Button } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '@shared/hooks';
 
 const UserMenu = () => {
   const dispatch = useAppDispatch();
