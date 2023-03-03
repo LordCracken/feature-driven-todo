@@ -8,7 +8,7 @@ export const checkTodo = (todoId: UniqueID, completed: boolean) => {
     const uid = getState().todos.uid;
 
     if (!uid) {
-      dispatch(todosActions.removeTodo(todoId));
+      dispatch(todosActions.checkTodo(todoId));
       const todos = getState().todos.list;
       sessionStorage.setItem('todos', JSON.stringify(todos));
       return;
