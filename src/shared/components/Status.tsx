@@ -3,12 +3,6 @@ import { Alert, Snackbar, SnackbarOrigin } from '@mui/material';
 
 type ISeverity = 'info' | 'error' | 'warning' | 'success';
 
-export enum Statuses {
-  success = 'done',
-  loading = 'loading',
-  error = 'fail',
-}
-
 interface IStatusProps {
   status: Statuses;
   message: string;
@@ -24,17 +18,17 @@ const Status: FC<IStatusProps> = ({
   const [severity, setSeverity] = useState<ISeverity>('info');
 
   useEffect(() => {
-    if (status === Statuses.loading) {
+    if (status === 'loading') {
       setSeverity('info');
       setIsOpen(true);
     }
 
-    if (status === Statuses.error) {
+    if (status === 'error') {
       setSeverity('error');
       setIsOpen(true);
     }
 
-    if (status === Statuses.success) {
+    if (status === 'success') {
       setSeverity('success');
       setIsOpen(true);
     }

@@ -9,13 +9,13 @@ const TodosListStatus = () => {
 
   if (uid) {
     switch (status) {
-      case Statuses.success:
+      case 'success':
         info = 'Задач нет, пора создать новые!';
         break;
-      case Statuses.loading:
+      case 'loading':
         info = 'Загрузка...';
         break;
-      case Statuses.error:
+      case 'error':
         info = 'Что-то пошло не так.';
         break;
     }

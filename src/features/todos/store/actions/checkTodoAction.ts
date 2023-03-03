@@ -2,7 +2,6 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { todosActions } from '../slice';
 
 import { baseUrl } from './index';
-import { Statuses } from '../../../../shared/components/Status';
 
 export const checkTodo = (todoId: UniqueID, completed: boolean) => {
   return async (dispatch: Dispatch, getState: () => RootState) => {
@@ -17,7 +16,7 @@ export const checkTodo = (todoId: UniqueID, completed: boolean) => {
 
     const url = `${baseUrl}/${uid}/${todoId}.json`;
 
-    dispatch(todosActions.updateStatus({ status: Statuses.loading, message: 'Загрузка...' }));
+    dispatch(todosActions.updateStatus({ status: 'loading', message: 'Загрузка...' }));
 
     try {
       const response = await fetch(url, {
@@ -30,10 +29,10 @@ export const checkTodo = (todoId: UniqueID, completed: boolean) => {
 
       if (response.ok) {
         dispatch(todosActions.checkTodo(todoId));
-        dispatch(todosActions.updateStatus({ status: Statuses.success, message: 'Готово!' }));
+        dispatch(todosActions.updateStatus({ status: 'success', message: 'Готово!' }));
       }
     } catch (error) {
-      dispatch(todosActions.updateStatus({ status: Statuses.error, message: 'Ошибка!' }));
+      dispatch(todosActions.updateStatus({ status: 'error', message: 'Ошибка!' }));
     }
   };
 };

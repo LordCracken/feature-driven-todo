@@ -3,7 +3,6 @@ import { todosActions } from '../slice';
 
 import { baseUrl } from './index';
 import { v4 as generateId } from 'uuid';
-import { Statuses } from '../../../../shared/components/Status';
 
 export const sendNewTodo = (todoContent: string) => {
   return async (dispatch: Dispatch, getState: () => RootState) => {
@@ -28,7 +27,7 @@ export const sendNewTodo = (todoContent: string) => {
 
     const url = `${baseUrl}/${uid}.json`;
 
-    dispatch(todosActions.updateStatus({ status: Statuses.loading, message: 'Загрузка...' }));
+    dispatch(todosActions.updateStatus({ status: 'loading', message: 'Загрузка...' }));
 
     try {
       const response = await fetch(url, {
@@ -42,13 +41,11 @@ export const sendNewTodo = (todoContent: string) => {
       if (response.ok) {
         const data = await response.json();
         createTodo(todoContent, data.name);
-        dispatch(
-          todosActions.updateStatus({ status: Statuses.success, message: 'Задача добавлена!' }),
-        );
+        dispatch(todosActions.updateStatus({ status: 'success', message: 'Задача добавлена!' }));
       }
     } catch (error) {
       dispatch(
-        todosActions.updateStatus({ status: Statuses.error, message: 'Не удалось создать задачу' }),
+        todosActions.updateStatus({ status: 'error', message: 'Не удалось создать задачу' }),
       );
     }
   };

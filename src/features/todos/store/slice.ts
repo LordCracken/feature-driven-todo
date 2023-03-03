@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Statuses } from '../../../shared/components/Status';
 
 export interface ITodo {
   id: UniqueID;

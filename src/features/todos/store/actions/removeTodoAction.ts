@@ -2,7 +2,6 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { todosActions } from '../slice';
 
 import { baseUrl } from './index';
-import { Statuses } from '../../../../shared/components/Status';
 
 export const removeTodo = (todoId: UniqueID) => {
   return async (dispatch: Dispatch, getState: () => RootState) => {
@@ -17,7 +16,7 @@ export const removeTodo = (todoId: UniqueID) => {
 
     const url = `${baseUrl}/${uid}/${todoId}.json`;
 
-    dispatch(todosActions.updateStatus({ status: Statuses.loading, message: 'Загрузка...' }));
+    dispatch(todosActions.updateStatus({ status: 'loading', message: 'Загрузка...' }));
 
     try {
       const response = await fetch(url, { method: 'DELETE' });
@@ -26,14 +25,14 @@ export const removeTodo = (todoId: UniqueID) => {
         dispatch(todosActions.removeTodo(todoId));
         dispatch(
           todosActions.updateStatus({
-            status: Statuses.success,
+            status: 'success',
             message: 'Задача удалена',
           }),
         );
       }
     } catch (error) {
       dispatch(
-        todosActions.updateStatus({ status: Statuses.error, message: 'Не удалось удалить задачу' }),
+        todosActions.updateStatus({ status: 'error', message: 'Не удалось удалить задачу' }),
       );
     }
   };

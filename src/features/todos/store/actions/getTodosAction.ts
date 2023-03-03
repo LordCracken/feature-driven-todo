@@ -2,7 +2,6 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { todosActions } from '../slice';
 
 import { baseUrl } from './index';
-import { Statuses } from '../../../../shared/components/Status';
 
 interface IServerTodos {
   [key: string]: {
@@ -36,7 +35,7 @@ export const getTodos = () => async (dispatch: Dispatch, getState: () => RootSta
     dispatch(todosActions.setTodos(loadedTodos));
   };
 
-  dispatch(todosActions.updateStatus({ status: Statuses.loading, message: 'Загрузка...' }));
+  dispatch(todosActions.updateStatus({ status: 'loading', message: 'Загрузка...' }));
 
   try {
     const response = await fetch(url);
@@ -44,9 +43,9 @@ export const getTodos = () => async (dispatch: Dispatch, getState: () => RootSta
     if (response.ok) {
       const data = await response.json();
       transformTodos(data);
-      dispatch(todosActions.updateStatus({ status: Statuses.success, message: 'Готово!' }));
+      dispatch(todosActions.updateStatus({ status: 'success', message: 'Готово!' }));
     }
   } catch (error) {
-    dispatch(todosActions.updateStatus({ status: Statuses.error, message: 'Ошибка!' }));
+    dispatch(todosActions.updateStatus({ status: 'error', message: 'Ошибка!' }));
   }
 };

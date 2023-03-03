@@ -3,26 +3,23 @@ import { AuthErrorCodes, getAuth, signInWithEmailAndPassword } from 'firebase/au
 import { Dispatch } from '@reduxjs/toolkit';
 import { userActions } from '../slice';
 
-import { AuthError } from './interfaces';
-import { Statuses } from '../../../../shared/components/Status';
-
 export const signInAction = (email: Email, password: Password) => async (dispatch: Dispatch) => {
-  dispatch(userActions.updateStatus({ status: Statuses.loading, message: 'Загрузка...' }));
+  dispatch(userActions.updateStatus({ status: 'loading', message: 'Загрузка...' }));
 
   try {
     const auth = getAuth();
     await signInWithEmailAndPassword(auth, email, password);
     dispatch(userActions.signIn());
-    dispatch(userActions.updateStatus({ status: Statuses.success, message: 'С возвращением!' }));
+    dispatch(userActions.updateStatus({ status: 'success', message: 'С возвращением!' }));
   } catch (error) {
     switch ((error as AuthError).code) {
       case AuthErrorCodes.INVALID_PASSWORD:
-        dispatch(userActions.updateStatus({ status: Statuses.error, message: 'Неверный пароль' }));
+        dispatch(userActions.updateStatus({ status: 'error', message: 'Неверный пароль' }));
         break;
       case AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER:
         dispatch(
           userActions.updateStatus({
-            status: Statuses.error,
+            status: 'error',
             message: 'Слишком много неудачных попыток. Попробуйте войти позже',
           }),
         );
@@ -30,7 +27,7 @@ export const signInAction = (email: Email, password: Password) => async (dispatc
       case AuthErrorCodes.USER_DELETED:
         dispatch(
           userActions.updateStatus({
-            status: Statuses.error,
+            status: 'error',
             message: 'Пользователя с таким Email не существует',
           }),
         );
@@ -38,7 +35,7 @@ export const signInAction = (email: Email, password: Password) => async (dispatc
       default:
         dispatch(
           userActions.updateStatus({
-            status: Statuses.error,
+            status: 'error',
             message: 'Не удалось войти в аккаунт',
           }),
         );
